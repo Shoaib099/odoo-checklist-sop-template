@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ========================================================= -->
+    <!-- SEARCH VIEW -->
+    <!-- ========================================================= -->
+
+    <record id="view_checklist_instance_search" model="ir.ui.view">
+        <field name="name">checklist.instance.search</field>
+        <field name="model">checklist.instance</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="template_id"/>
+                <field name="user_id"/>
+
+                <filter name="my_checklists"
+                        string="My Checklists"
+                        domain="[('user_id', '=', uid)]"/>
+
+                <filter name="draft"
+                        string="Draft"
+                        domain="[('state', '=', 'draft')]"/>
+
+                <filter name="in_progress"
+                        string="In Progress"
+                        domain="[('state', '=', 'in_progress')]"/>
+
+                <filter name="done"
+                        string="Done"
+                        domain="[('state', '=', 'done')]"/>
+
+                <group>
+                    <filter name="group_by_template"
+                            string="Template"
+                            context="{'group_by': 'template_id'}"/>
+
+                    <filter name="group_by_state"
+                            string="Status"
+                            context="{'group_by': 'state'}"/>
+
+                    <filter name="group_by_user"
+                            string="Assigned To"
+                            context="{'group_by': 'user_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+
+    <!-- ========================================================= -->
+    <!-- LIST VIEW -->
+    <!-- ========================================================= -->
+
+    <record id="view_checklist_instance_list" model="ir.ui.view">
+        <field name="name">checklist.instance.list</field>
+        <field name="model">checklist.instance</field>
+        <field name="arch" type="xml">
+            <list decoration-muted="state == 'cancelled'"
+                  decoration-success="state == 'done'">
+
+                <field name="name"/>
+                <field name="template_id"/>
+                <field name="res_name" string="Linked To"/>
+                <field name="user_id"/>
+                <field name="deadline"/>
+
+                <field name="progress"
+                       widget="progressbar"/>
+
+                <field name="state"
+                       widget="badge"
+                       decoration-info="state == 'draft'"
+                       decoration-warning="state == 'in_progress'"
+                       decoration-success="state == 'done'"/>
+
+            </list>
+        </field>
+    </record>
+
+
+    <!-- ========================================================= -->
+    <!-- FORM VIEW -->
+    <!-- ========================================================= -->
+
+    <record id="view_checklist_instance_form" model="ir.ui.view">
+        <field name="name">checklist.instance.form</field>
+        <field name="model">checklist.instance</field>
+
+        <field name="arch" type="xml">
+            <form>
+
+                <header>
+
+                    <button name="action_start"
+                            type="object"
+                            string="Start"
+                            invisible="state != 'draft'"
+                            class="btn-primary"/>
+
+                    <button name="action_done"
+                            type="object"
+                            string="Mark Done"
+                            invisible="state != 'in_progress'"
+                            class="btn-primary"/>
+
+                    <button name="action_reset_to_draft"
+                            type="object"
+                            string="Reset to Draft"
+                            invisible="state not in ('done', 'cancelled')"/>
+
+                    <button name="action_cancel"
+                            type="object"
+                            string="Cancel"
+                            invisible="state in ('done', 'cancelled')"/>
+
+                    <field name="state"
+                           widget="statusbar"
+                           statusbar_visible="draft,in_progress,done"/>
+
+                </header>
+
+
+                <sheet>
+
+                    <div class="oe_button_box" name="button_box">
+
+                        <button name="action_open_related_record"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-external-link"
+                                invisible="not res_name">
+
+                            <field name="res_name"
+                                   widget="statinfo"
+                                   string="Open Record"/>
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+
+
+                    <group>
+
+                        <group>
+                            <field name="template_id"/>
+                            <field name="user_id"/>
+                            <field name="deadline"/>
+                        </group>
+
+                        <group>
+                            <field name="res_model_id"/>
+                            <field name="res_id"
+                                   invisible="not res_model_id"/>
+
+                            <field name="progress"
+                                   widget="progressbar"/>
+
+                            <field name="done_lines"
+                                   invisible="1"/>
+
+                            <field name="total_lines"
+                                   invisible="1"/>
+                        </group>
+
+                    </group>
+
+
+                    <notebook>
+
+                        <page string="Items">
+
+                            <field name="line_ids">
+
+                                <list editable="bottom"
+                                      decoration-success="is_done">
+
+                                    <field name="sequence"
+                                           widget="handle"/>
+
+                                    <field name="name"/>
+
+                                    <field name="responsible_role"/>
+
+                                    <field name="is_mandatory"/>
+
+                                    <field name="is_done"/>
+
+                                    <field name="done_by"
+                                           readonly="1"/>
+
+                                    <field name="done_date"
+                                           readonly="1"/>
+
+                                </list>
+
+                            </field>
+
+                        </page>
+
+                    </notebook>
+
+                </sheet>
+
+
+                <div class="oe_chatter">
+
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+
+                </div>
+
+            </form>
+        </field>
+    </record>
+
+
+    <!-- ========================================================= -->
+    <!-- WINDOW ACTION -->
+    <!-- ========================================================= -->
+
+    <record id="action_checklist_instance"
+            model="ir.actions.act_window">
+
+        <field name="name">Checklists</field>
+
+        <field name="res_model">checklist.instance</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_my_checklists': 1}
+        </field>
+
+        <field name="help" type="html">
+
+            <p class="o_view_nocontent_smiling_face">
+                No checklists yet
+            </p>
+
+            <p>
+                Create one from scratch, or open a Checklist Template
+                and click "Create Checklist From This".
+            </p>
+
+        </field>
+
+    </record>
+
+</odoo>

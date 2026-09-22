@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_checklist_template_list" model="ir.ui.view">
+        <field name="name">checklist.template.list</field>
+        <field name="model">checklist.template</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="category"/>
+                <field name="line_count" string="Items"/>
+                <field name="instance_count" string="Used"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_checklist_template_form" model="ir.ui.view">
+        <field name="name">checklist.template.form</field>
+        <field name="model">checklist.template</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_create_instance" type="object"
+                            string="Create Checklist From This" class="btn-primary"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_instances" type="object"
+                                class="oe_stat_button" icon="fa-list-check">
+                            <field name="instance_count" widget="statinfo" string="Checklists"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="e.g. New Employee Onboarding"/></h1>
+                    </div>
+                    <group>
+                        <field name="category"/>
+                        <field name="company_id" groups="base.group_multi_company"/>
+                        <field name="active" invisible="1"/>
+                    </group>
+                    <field name="description" placeholder="When should this checklist be used?"/>
+                    <notebook>
+                        <page string="Items">
+                            <field name="line_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="responsible_role"/>
+                                    <field name="is_mandatory"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_checklist_template" model="ir.actions.act_window">
+        <field name="name">Checklist Templates</field>
+        <field name="res_model">checklist.template</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first checklist / SOP template
+            </p>
+            <p>
+                Templates are blueprints - build the list of items once,
+                then generate as many trackable checklists from it as you need.
+            </p>
+        </field>
+    </record>
+
+</odoo>

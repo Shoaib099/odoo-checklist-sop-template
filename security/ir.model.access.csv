@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_checklist_template_user,checklist.template.user,model_checklist_template,group_checklist_user,1,0,0,0
+access_checklist_template_manager,checklist.template.manager,model_checklist_template,group_checklist_manager,1,1,1,1
+access_checklist_template_line_user,checklist.template.line.user,model_checklist_template_line,group_checklist_user,1,0,0,0
+access_checklist_template_line_manager,checklist.template.line.manager,model_checklist_template_line,group_checklist_manager,1,1,1,1
+access_checklist_instance_user,checklist.instance.user,model_checklist_instance,group_checklist_user,1,1,1,1
+access_checklist_instance_manager,checklist.instance.manager,model_checklist_instance,group_checklist_manager,1,1,1,1
+access_checklist_instance_line_user,checklist.instance.line.user,model_checklist_instance_line,group_checklist_user,1,1,1,1
+access_checklist_instance_line_manager,checklist.instance.line.manager,model_checklist_instance_line,group_checklist_manager,1,1,1,1

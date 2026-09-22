@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_checklist_root"
+              name="Checklists"
+              sequence="85"
+              web_icon="checklist_sop_template,static/description/icon.png"/>
+
+    <menuitem id="menu_checklist_instance"
+              name="Checklists"
+              parent="menu_checklist_root"
+              action="checklist_sop_template.action_checklist_instance"
+              sequence="10"/>
+
+    <menuitem id="menu_checklist_template"
+              name="Templates"
+              parent="menu_checklist_root"
+              action="checklist_sop_template.action_checklist_template"
+              groups="checklist_sop_template.group_checklist_manager"
+              sequence="20"/>
+
+</odoo>

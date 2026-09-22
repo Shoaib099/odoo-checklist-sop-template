@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record id="demo_template_onboarding" model="checklist.template">
+        <field name="name">Employee Onboarding</field>
+        <field name="category">onboarding</field>
+        <field name="description">Run this checklist for every new hire's first week.</field>
+    </record>
+
+    <record id="demo_template_onboarding_line_1" model="checklist.template.line">
+        <field name="template_id" ref="demo_template_onboarding"/>
+        <field name="sequence">10</field>
+        <field name="name">Prepare laptop and accounts</field>
+        <field name="responsible_role">IT</field>
+        <field name="is_mandatory">1</field>
+    </record>
+
+    <record id="demo_template_onboarding_line_2" model="checklist.template.line">
+        <field name="template_id" ref="demo_template_onboarding"/>
+        <field name="sequence">20</field>
+        <field name="name">Sign employment contract</field>
+        <field name="responsible_role">HR</field>
+        <field name="is_mandatory">1</field>
+    </record>
+
+    <record id="demo_template_onboarding_line_3" model="checklist.template.line">
+        <field name="template_id" ref="demo_template_onboarding"/>
+        <field name="sequence">30</field>
+        <field name="name">Introduce to team</field>
+        <field name="responsible_role">Team Lead</field>
+        <field name="is_mandatory">0</field>
+    </record>
+
+    <record id="demo_template_onboarding_line_4" model="checklist.template.line">
+        <field name="template_id" ref="demo_template_onboarding"/>
+        <field name="sequence">40</field>
+        <field name="name">Complete safety training</field>
+        <field name="responsible_role">HR</field>
+        <field name="is_mandatory">1</field>
+    </record>
+
+</odoo>

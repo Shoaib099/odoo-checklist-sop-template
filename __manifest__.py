@@ -30,7 +30,7 @@ Features
 * Two access levels: Checklist User and Checklist Manager
 """,
     'author': 'Shoaib Saifi',
-    'website': 'https://example.com',
+    'website': 'https://github.com/Shoaib099/odoo-checklist-sop-template',
     'license': 'LGPL-3',
     'depends': ['mail'],
     'data': [
